@@ -1,7 +1,10 @@
-SmartOS Terraform Provider
+SmartOS Cluster Terraform Provider
 =========================
 
 <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
+
+NOTE: This is a preliminary checkin of a SmartOS provider that supports talking to multiple nodes.  This is a fork (but not in the git sense) of my SmartOS provider.   The below documentation is not yet updated to reflect this provider's new capabilities.
+
 
 Requirements
 ------------
