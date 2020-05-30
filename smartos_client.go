@@ -55,6 +55,8 @@ func (c *SmartOSClient) Close(nodeName string) {
 }
 
 func (c *SmartOSClient) CreateMachine(nodeName string, machine *Machine) (*uuid.UUID, error) {
+	log.Printf("Creating machine on node: %s", nodeName)
+
 	err := c.Connect(nodeName)
 	if err != nil {
 		return nil, err

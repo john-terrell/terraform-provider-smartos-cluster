@@ -174,8 +174,8 @@ func (m *Machine) SaveToSchema(d *schema.ResourceData) error {
 	// We update the metadata in case machine provisioning pushed data there.
 	d.Set("metadata", m.Metadata)
 
-	log.Printf("Machine saved to schema with primary IP: '%s'", m.PrimaryIP)
 	if m.PrimaryIP != "" {
+		log.Printf("Machine saved to schema with primary IP: '%s'", m.PrimaryIP)
 		d.SetConnInfo(map[string]string{
 			"type": "ssh",
 			"host": m.PrimaryIP,

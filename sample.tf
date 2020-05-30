@@ -1,6 +1,8 @@
 provider "smartos-cluster" {
     hosts = {
-        "r620": "10.99.50.1"
+        "r620": "10.99.50.1",
+        "r320": "10.99.50.2",
+        "r710": "10.99.50.3",
     }
     user = "root"
 }
@@ -11,11 +13,30 @@ data "smartos-cluster_image" "illumos" {
     version  = "18.4.0"
 }
 
+variable "node_configurations" {
+  default = {
+      "r620" = {
+        "ip" = "10.0.222.225"          
+        "cpu_cap" = 400
+      }
+      "r710" = {
+        "ip" = "10.0.222.226"          
+        "cpu_cap" = 200
+      }
+      "r710" = {
+        "ip" = "10.0.222.227"          
+        "cpu_cap" = 300
+      }
+  }
+}
+
 resource "smartos-cluster_machine" "illumos" {
-    node_name = "r620"
+    for_each = var.node_configurations
+
+    node_name = each.key
     alias = "cluster_test"
     brand = "joyent"
-    cpu_cap = 100
+    cpu_cap = each.value["cpu_cap"]
 
     customer_metadata = {
         # Note: this is my public SSH key...use your own.  :-)
@@ -28,7 +49,7 @@ resource "smartos-cluster_machine" "illumos" {
     max_physical_memory = 512
     nics {
         nic_tag = "external"
-        ips = ["10.0.222.222/16"]
+        ips = ["${each.value["ip"]}/16"]
         gateways = ["10.0.0.1"]
         interface = "net4"
     }
@@ -36,6 +57,10 @@ resource "smartos-cluster_machine" "illumos" {
     quota = 25
 
     resolvers = ["1.1.1.1", "1.0.0.1"]
+
+    connection {
+        host = each.value["ip"]
+    }
 
     provisioner "remote-exec" {
         inline = [
