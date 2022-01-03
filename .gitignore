@@ -1,4 +1,4 @@
 .terraform
-terraform-provider-smartos-cluster
 terraform.tfstate
 terraform.tfstate.backup
+**/.DS_Store

@@ -1,10 +1,10 @@
-package main
+package smartos
 
 import (
 	"net"
 	"os"
 
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/agent"
 )
